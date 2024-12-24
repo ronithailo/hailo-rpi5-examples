@@ -44,12 +44,6 @@ Alternatively, you can manually perform the setup using the steps below.
     ```
     To download all models , You should use the `--all` with the ./download_resources.sh
 
-4. ### Post Process Compilation
-    This will compile post process files required for the demos. You can review the code in the `cpp` directory and tweak it as needed.
-    ```bash
-    ./compile_postprocess.sh
-    ```
-
 # Detection Example
 ![Banner](images/detection.gif)
 
@@ -214,4 +208,5 @@ In our examples, we will use the second method. This approach allows you to desc
 GStreamer is a powerful framework that enables the seamless flow of data between elements such as sources, filters, and sinks. For more detailed information on constructing pipelines, refer to the [GStreamer documentation](https://gstreamer.freedesktop.org/documentation/) and the [TAPPAS Architecture documentation](https://github.com/hailo-ai/tappas/blob/master/docs/TAPPAS_architecture.rst).
 
 ## Hailo Raspberry Pi Common Utilities
-[Hailo Raspberry Pi Common Utilities](https://github.com/hailo-ai/hailo-apps-infra/blob/master/doc/development_guide.md)
+For more control over pipeline elements and other utilities please refer: 
+[Hailo Apps Infra - Developer guide](https://github.com/hailo-ai/hailo-apps-infra/blob/master/doc/development_guide.md)
