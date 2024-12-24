@@ -1,5 +1,7 @@
 # Hailo RPi5 Basic Pipelines
 This repository contains examples of basic pipelines using Hailo's H8 and H8L accelerators. The examples demonstrate object detection, human pose estimation, and instance segmentation, providing a solid foundation for your own projects.
+This repo is using our new [Hailo Apps Infra](https://github.com/giladnah/hailo-apps-infra]) repo.
+See our Developement Guide for more information on how to use the pipelines to create your own custom pipelines.
 
 ## Installation
 
@@ -206,7 +208,3 @@ GStreamer pipelines are constructed by chaining together individual elements. Th
 In our examples, we will use the second method. This approach allows you to describe the pipeline with a simple string, which can also be executed directly from the command line using the `gst-launch-1.0` command. This is the method used in the TAPPAS pipelines.
 
 GStreamer is a powerful framework that enables the seamless flow of data between elements such as sources, filters, and sinks. For more detailed information on constructing pipelines, refer to the [GStreamer documentation](https://gstreamer.freedesktop.org/documentation/) and the [TAPPAS Architecture documentation](https://github.com/hailo-ai/tappas/blob/master/docs/TAPPAS_architecture.rst).
-
-## Hailo Raspberry Pi Common Utilities
-For more control over pipeline elements and other utilities please refer: 
-[Hailo Apps Infra - Developer guide](https://github.com/hailo-ai/hailo-apps-infra/blob/master/doc/development_guide.md)

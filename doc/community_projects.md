@@ -9,7 +9,7 @@ python basic_pipelines/pose_estimation.py
 This verifies that your environment is set up properly.
 
 ## Go Over the Basic Pipelines Documentation 
-Click [here](../doc/basic-pipelines.md) for the Basic Pipeline Documentation
+Click [here](basic-pipelines.md) for the Basic Pipeline Documentation
 
 ## Create Your Project Directory
 Navigate to the community_projects folder and create a directory for your project.

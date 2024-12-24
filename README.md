@@ -35,10 +35,14 @@ This application includes support for using retrained detection models. For more
 ##### [Instance Segmentation Example](doc/basic-pipelines.md#instance-segmentation-example)
 ![Instance Segmentation Example](doc/images/instance_segmentation.gif)
 
+#### Community Projects
+
+We invite you to explore and contribute to our [Community Projects](doc/community_projects.md)!
+
 #### CLIP Application
 
 CLIP (Contrastive Language-Image Pretraining) predicts the most relevant text prompt on real-time video frames using the Hailo-8L AI processor.
-See the [hailo-CLIP Repository](https://github.com/hailo-ai/hailo-CLIP) for more information.
+See the [hailo-CLIP Repository](https://github.com/giladnah/hailo-CLIP) for more information.
 Click the image below to watch the demo on YouTube.
 
 [![Watch the demo on YouTube](https://img.youtube.com/vi/XXizBHtCLew/0.jpg)](https://youtu.be/XXizBHtCLew)
@@ -47,6 +51,7 @@ Click the image below to watch the demo on YouTube.
 #### Frigate Integration - Coming Soon
 
 Frigate is an open-source video surveillance software that runs on a Raspberry Pi. This integration will allow you to use the Hailo-8L AI processor for object detection in real-time video streams.
+
 
 ### Raspberry Pi Official Examples
 
@@ -84,6 +89,7 @@ We welcome contributions from the community. You can contribute by:
 2. Reporting issues and bugs.
 3. Suggesting new features or improvements.
 4. Joining the discussion on the [Hailo Community Forum](https://community.hailo.ai/).
+5. Contribute to our [Community Projects](doc/community_projects.md)
 
 ## License
 
