@@ -35,11 +35,11 @@ This application includes support for using retrained detection models. For more
 ##### [Instance Segmentation Example](doc/basic-pipelines.md#instance-segmentation-example)
 ![Instance Segmentation Example](doc/images/instance_segmentation.gif)
 
-#### Community Projects
+### Community Projects
 
-We invite you to explore and contribute to our [Community Projects](doc/community_projects.md)!
+Get involved and make your mark! Explore our Community Projects and start contributing today—because together, we build better things! 🚀
 
-#### CLIP Application
+### CLIP Application
 
 CLIP (Contrastive Language-Image Pretraining) predicts the most relevant text prompt on real-time video frames using the Hailo-8L AI processor.
 See the [hailo-CLIP Repository](https://github.com/giladnah/hailo-CLIP) for more information.
@@ -82,6 +82,10 @@ Additional documentation and [tutorials](https://hailo.ai/developer-zone/documen
 For a full end-to-end training and deployment example, see the [Retraining Example](doc/retraining-example.md).
 The detection basic pipeline example includes support for retrained models. For more information, see [Using Retrained Models](doc/basic-pipelines.md#using-retrained-models).
 
+### Hailo Apps Infra
+The Hailo Apps Infra repository containes the infrastructure of hailo applications and pipelines.
+You can find it here  see the [Hailo Apps Infra](https://github.com/giladnah/hailo-apps-infra).
+
 ## Contributing
 
 We welcome contributions from the community. You can contribute by:
@@ -89,7 +93,7 @@ We welcome contributions from the community. You can contribute by:
 2. Reporting issues and bugs.
 3. Suggesting new features or improvements.
 4. Joining the discussion on the [Hailo Community Forum](https://community.hailo.ai/).
-5. Contribute to our [Community Projects](doc/community_projects.md)
+5. Contribute to our [Community Projects](community_projects/community_projects.md)
 
 ## License
 

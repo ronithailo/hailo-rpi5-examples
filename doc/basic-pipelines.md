@@ -1,6 +1,6 @@
 # Hailo RPi5 Basic Pipelines
 This repository contains examples of basic pipelines using Hailo's H8 and H8L accelerators. The examples demonstrate object detection, human pose estimation, and instance segmentation, providing a solid foundation for your own projects.
-This repo is using our new [Hailo Apps Infra](https://github.com/giladnah/hailo-apps-infra]) repo.
+This repo is using our new [Hailo Apps Infra](https://github.com/giladnah/hailo-apps-infra) repo.
 See our Developement Guide for more information on how to use the pipelines to create your own custom pipelines.
 
 ## Installation
