@@ -1,3 +1,4 @@
+# README Example 
 Create a README.md file in your project directory. This file should include:
 
 ## Overview 
@@ -12,7 +13,7 @@ Add a video link from youtube - for example:
 [![Watch the demo on YouTube](https://img.youtube.com/vi/XXizBHtCLew/0.jpg)](https://youtu.be/XXizBHtCLew)
 
 ## Versions
-Add the versions that you tested the examples on
+Add the versions that you tested the examples on.
 
 ## Setup Instructions
 How to install dependencies and run the project - for example:
