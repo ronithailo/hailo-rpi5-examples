@@ -68,6 +68,23 @@ def get_pose_compatible_hefs(architecture):
 
     return [os.path.join("resources", hef) for hef in hef_list]
 
+def get_face_recognition_compatible_hefs(architecture):
+    """Get a list of compatible HEF files based on the device architecture."""
+    H8_HEFS = [
+        "scrfd_10g.hef",
+        "arcface_mobilefacenet.hef",
+    ]
+
+    H8L_HEFS = [
+        "scrfd_2.5g.hef",
+        "arcface_mobilefacenet_h8l.hef",
+    ]
+    hef_list = H8L_HEFS
+    if architecture == 'hailo8':
+        hef_list = hef_list + H8_HEFS
+
+    return [os.path.join("resources", hef) for hef in hef_list]
+
 def get_seg_compatible_hefs(architecture):
     """Get a list of compatible HEF files based on the device architecture."""
     H8_HEFS = [
@@ -182,6 +199,54 @@ def test_pose_hefs():
                     process.kill()
                     process.wait()
 
+def test_face_recognition_hefs():
+    """Test face_recognition estimation pipeline with all compatible HEFs."""
+    log_dir = "logs"
+    os.makedirs(log_dir, exist_ok=True)
+
+    architecture = get_device_architecture()
+    compatible_hefs = get_face_recognition_compatible_hefs(architecture)
+    for hef in compatible_hefs:
+        hef_name = os.path.basename(hef)
+
+        log_file_path = os.path.join(log_dir, f"face_recognition{hef_name}_video_test.log")
+        logging.info(f"Running face_recognition with {hef_name} (video input)")
+        with open(log_file_path, "w") as log_file:
+            process = subprocess.Popen(
+                ['python', '-m', 'hailo_apps_infra.face_recognition_pipeline',
+                 '--input', 'resources/example.mp4',
+                 '--hef-path', hef,
+                 '--show-fps'])
+            
+            try:
+                # Let it run
+                time.sleep(TEST_RUN_TIME)
+                
+                # Gracefully terminate
+                process.send_signal(signal.SIGTERM)
+                
+                try:
+                    process.wait(timeout=5)
+                except subprocess.TimeoutExpired:
+                    process.kill()
+                    process.wait()
+                
+                # Check return code
+                assert process.returncode == 0 or process.returncode == -15, \
+                    f"Process failed with return code {process.returncode}"
+                
+                # Write to log
+                log_file.write(f"face_recognition with {hef_name} completed successfully\n")
+                log_file.write(f"Return code: {process.returncode}\n")
+                
+            except Exception as e:
+                process.kill()
+                pytest.fail(f"Test failed: {str(e)}")
+            finally:
+                if process.poll() is None:
+                    process.kill()
+                    process.wait()
+
 def test_segmentation_hefs():
     """Test instance segmentation pipeline with all compatible HEFs."""
     log_dir = "logs"
@@ -244,7 +309,9 @@ def test_rpi_camera():
     pipeline_configs = [
         ('detection_pipeline', get_detection_compatible_hefs(arch)),
         ('pose_estimation_pipeline', get_pose_compatible_hefs(arch)),
-        ('instance_segmentation_pipeline', get_seg_compatible_hefs(arch))
+        ('instance_segmentation_pipeline', get_seg_compatible_hefs(arch)),
+        ('face_recognition_pipeline', get_seg_compatible_hefs(arch))
+        
     ]
 
     for pipeline_name, hefs in pipeline_configs:

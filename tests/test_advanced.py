@@ -47,7 +47,7 @@ def run_download_resources():
 
 @pytest.mark.performance
 def test_inference_speed():
-    models = ['detection.py', 'pose_estimation.py', 'instance_segmentation.py']
+    models = ['detection.py', 'pose_estimation.py', 'instance_segmentation.py', 'face_recognition.py']
     for model in models:
         stdout, _ = run_pipeline(model, 'resources/example.mp4', duration=60)
         fps_lines = [line for line in stdout.split('\n') if 'FPS' in line or 'fps' in line]

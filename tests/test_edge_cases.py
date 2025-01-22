@@ -22,7 +22,7 @@ def test_unsupported_format():
     assert "Can't typefind stream" in result.stdout, "The pipeline should report an error for unsupported input format."
 
 
-@pytest.mark.parametrize("script", ["detection.py", "pose_estimation.py", "instance_segmentation.py"])
+@pytest.mark.parametrize("script", ["detection.py", "pose_estimation.py", "instance_segmentation.py", "face_recognition.py"])
 def test_invalid_command_arguments(script):
     """Test how pipelines handle invalid command-line arguments."""
     process = subprocess.run(['python', f'basic_pipelines/{script}', '--unknown_arg'],

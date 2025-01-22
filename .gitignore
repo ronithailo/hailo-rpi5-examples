@@ -161,3 +161,6 @@ venv_hailo_rpi5_examples/*
 resources/*.mp4
 resources/*.hef
 resources/*.so
+
+# gstreamer
+basic_pipelines/gstshark_2025-01-19_10:20:35/
