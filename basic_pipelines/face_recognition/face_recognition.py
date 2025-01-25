@@ -62,9 +62,15 @@ def app_callback(pad, info, user_data):
         confidence = detection.get_confidence()
         if label == "face":
             # Get track ID
+            classifications = detection.get_objects_typed(hailo.HAILO_CLASSIFICATION)
+            if len(classifications) > 0:
+                string_to_print += 'Classification:'
+                for classification in classifications:
+                    class_label = classification.get_label()
+                    string_to_print += f' {class_label} '
             track_id = 0
             track = detection.get_objects_typed(hailo.HAILO_UNIQUE_ID)
-            if len(track) == 1:
+            if len(track) > 0:
                 track_id = track[0].get_id()
             string_to_print += (f"Detection: ID: {track_id} Label: {label} Confidence: {confidence:.2f}\n")
             detection_count += 1
