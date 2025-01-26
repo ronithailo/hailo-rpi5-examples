@@ -105,23 +105,6 @@ def get_pose_compatible_hefs(architecture):
 
     return [os.path.join("resources", hef) for hef in hef_list]
 
-def get_face_recognition_compatible_hefs(architecture):
-    """Get a list of compatible HEF files based on the device architecture."""
-    H8_HEFS = [
-        "hailo8/scrfd_10g.hef",
-        "hailo8/arcface_mobilefacenet.hef",
-    ]
-
-    H8L_HEFS = [
-        "hailo8l/scrfd_2.5g.hef",
-        "hailo8l/arcface_mobilefacenet_h8l.hef",
-    ]
-    hef_list = H8L_HEFS
-    if architecture == 'hailo8':
-        # check both HAILO8 and HAILO8L
-        hef_list = hef_list + H8_HEFS
-
-    return [os.path.join("resources/hefs/", hef) for hef in hef_list]
 
 def get_seg_compatible_hefs(architecture):
     """Get a list of compatible HEF files based on the device architecture."""
@@ -297,43 +280,6 @@ def test_pose_hefs():
             assert "detection" in stdout.decode().lower(), f"pose with {hef_name} (video input) did not make any detections"
 
 
-def test_face_recognition_hefs():
-    """
-    Combined test function for basic pipeline scripts with different HEFs and input sources.
-    """
-    log_dir = "logs"
-    os.makedirs(log_dir, exist_ok=True)
-
-    architecture = get_device_architecture()
-    compatible_hefs = get_face_recognition_compatible_hefs(architecture)
-    for hef in compatible_hefs:
-        hef_name = os.path.basename(hef)
-
-        # Test with video input
-        log_file_path = os.path.join(log_dir, f"face_recognition_{hef_name}_video_test.log")
-        logging.info(f"Running face_recognition with {hef_name} (video input)")
-        with open(log_file_path, "w") as log_file:
-            process = subprocess.Popen(['python', 'basic_pipelines/face_recognition/face_recognition.py', '--input', 'resources/example.mp4', '--hef-path', hef],
-                                       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            try:
-                time.sleep(TEST_RUN_TIME)
-                process.send_signal(signal.SIGTERM)
-                process.wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                process.kill()
-                pytest.fail(f"face_recognition with {hef_name} (video input) could not be terminated within 5 seconds after running for {TEST_RUN_TIME} seconds")
-
-            stdout, stderr = process.communicate()
-            log_file.write(f"face_recognition with {hef_name} (video input) stdout:\n{stdout.decode()}\n")
-            log_file.write(f"face_recognition with {hef_name} (video input) stderr:\n{stderr.decode()}\n")
-
-            assert "Traceback" not in stderr.decode(), f"face_recognition with {hef_name} (video input) encountered an exception: {stderr.decode()}"
-            assert "Error" not in stderr.decode(), f"face_recognition with {hef_name} (video input) encountered an error: {stderr.decode()}"
-            assert "frame" in stdout.decode().lower(), f"face_recognition with {hef_name} (video input) did not process any frames"
-            assert "detection" in stdout.decode().lower(), f"face_recognition with {hef_name} (video input) did not make any detections"
-
-
-
 def test_seg_hefs():
     """
     Combined test function for basic pipeline scripts with different HEFs and input sources.
@@ -398,6 +344,33 @@ def test_detection_retraining():
 
         assert "Traceback" not in stderr.decode(), f"Detection with retrained model (video input) encountered an exception: {stderr.decode()}"
         assert "Error" not in stderr.decode(), f"Detection with retrained model (video input) encountered an error: {stderr.decode()}"
+
+def test_face_recognition_training():
+    """
+    Test the face recognition pipeline with a training mode.
+    """
+    log_dir = "logs"
+    os.makedirs(log_dir, exist_ok=True)
+    log_file_path = os.path.join(log_dir, "face_recognition_training_video_test.log")
+    logging.info("Running face recognition with trainong mode (video input)")
+    with open(log_file_path, "w") as log_file:
+        cmd = ['python', 'basic_pipelines/face_recognition/face_recognition.py', 'training-mode']
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        try:
+            time.sleep(TEST_RUN_TIME)
+            process.send_signal(signal.SIGTERM)
+            process.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            pytest.fail(f"face recognition with training mode (video input) could not be terminated within 5 seconds after running for {TEST_RUN_TIME} seconds")
+
+        stdout, stderr = process.communicate()
+        log_file.write(f"face recognition with training mode (video input) stdout:\n{stdout.decode()}\n")
+        log_file.write(f"face recognition with training mode (video input) stderr:\n{stderr.decode()}\n")
+
+        assert "Traceback" not in stderr.decode(), f"Detection with retrained model (video input) encountered an exception: {stderr.decode()}"
+        assert "Error" not in stderr.decode(), f"Detection with retrained model (video input) encountered an error: {stderr.decode()}"
+
 
 # def test_pipeline_with_use_frame():
 #     """

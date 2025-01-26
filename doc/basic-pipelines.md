@@ -1,5 +1,5 @@
 # Hailo RPi5 Basic Pipelines
-This repository contains examples of basic pipelines using Hailo's H8 and H8L accelerators. The examples demonstrate object detection, human pose estimation, and instance segmentation, providing a solid foundation for your own projects.
+This repository contains examples of basic pipelines using Hailo's H8 and H8L accelerators. The examples demonstrate object detection, human pose estimation, instance segmentation, and face recognition, providing a solid foundation for your own projects.
 This repo is using our [Hailo Apps Infra](https://github.com/hailo-ai/hailo-apps-infra) repo as a dependency.
 See our Development Guide for more information on how to use the pipelines to create your own custom pipelines.
 
@@ -8,7 +8,7 @@ See the [Installation Guide](../README.md#installation) in the main README for d
 
 # Development Guide
 
-This guide provides an overview of how to develop custom applications using the basic pipelines provided in this repository. The examples demonstrate object detection, human pose estimation, and instance segmentation using Hailo's H8 and H8L accelerators.
+This guide provides an overview of how to develop custom applications using the basic pipelines provided in this repository. The examples demonstrate object detection, human pose estimation, instance segmentation, and face recognition using Hailo's H8 and H8L accelerators.
 
 ## Understanding the Callback Method
 
@@ -86,6 +86,21 @@ The callback function processes instance segmentation metadata from the network 
 - **Color Coding**: Uses predefined colors to differentiate between tracked instances.
 - **Mask Overlay**: Resizes and overlays the segmentation masks on the frame.
 - **Boundary Handling**: Ensures the ROI dimensions are within the frame boundaries and handles negative values.
+
+# Face Recognition Example
+![Banner](images/face_recogntion.gif)
+
+This example demonstrates face recognition using the `scrfd_2.5g` and `arcface_mobilenet` modes for Hailo-8l (13 TOPS) and the `scrfd_10g` and `arcface_mobilenet`models for Hailo-8 (26 TOPS).
+
+## What’s in This Example:
+
+### Face Recognition Callback Class
+The callback function retrieves face recognition metadata from the network output. Each face is represented as a `HAILO_DETECTION` and every recognized face is represented as `HAILO_CLASSIFICATION`. 
+
+### Running Few Models
+This example demonstraite a usage of 2 models, using Hailo cropper element.
+The first model run face detection, then using hailo cropper we run face recognition for each cropped face.
+
 
 ## Development Recommendations
 

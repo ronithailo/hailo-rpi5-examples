@@ -13,7 +13,7 @@ For instructions on how to set up Hailo's hardware and software on the Raspberry
 
 
 # Hailo RPi5 Basic Pipelines
-The basic pipelines examples demonstrate object detection, human pose estimation, and instance segmentation, providing a solid foundation for your own projects.
+The basic pipelines examples demonstrate object detection, human pose estimation, instance segmentation, and face recognition, providing a solid foundation for your own projects.
 This repo is using our new [Hailo Apps Infra](https://github.com/hailo-ai/hailo-apps-infra) repo as a dependency.
 See our Developement Guide for more information on how to use the pipelines to create your own custom pipelines.
 
@@ -95,6 +95,17 @@ For more information see [Instance Segmentation Example Documentation.](doc/basi
 #### Run the instance segmentation example:
 ```bash
 python basic_pipelines/instance_segmentation.py
+```
+To close the application, press `Ctrl+C`.
+See Detection Example above for additional input options examples.
+
+### Face Recognition Example
+For more information see [Face Recognition Example Documentation.](doc/basic-pipelines.md#face-recognition-example)
+![Face Recognition Example](doc/images/face_recognition.gif)
+
+#### Run the face recognition example:
+```bash
+python basic_pipelines/face_recognition/face_recognition.py
 ```
 To close the application, press `Ctrl+C`.
 See Detection Example above for additional input options examples.

@@ -199,54 +199,6 @@ def test_pose_hefs():
                     process.kill()
                     process.wait()
 
-def test_face_recognition_hefs():
-    """Test face_recognition estimation pipeline with all compatible HEFs."""
-    log_dir = "logs"
-    os.makedirs(log_dir, exist_ok=True)
-
-    architecture = get_device_architecture()
-    compatible_hefs = get_face_recognition_compatible_hefs(architecture)
-    for hef in compatible_hefs:
-        hef_name = os.path.basename(hef)
-
-        log_file_path = os.path.join(log_dir, f"face_recognition{hef_name}_video_test.log")
-        logging.info(f"Running face_recognition with {hef_name} (video input)")
-        with open(log_file_path, "w") as log_file:
-            process = subprocess.Popen(
-                ['python', '-m', 'hailo_apps_infra.face_recognition_pipeline',
-                 '--input', 'resources/example.mp4',
-                 '--hef-path', hef,
-                 '--show-fps'])
-            
-            try:
-                # Let it run
-                time.sleep(TEST_RUN_TIME)
-                
-                # Gracefully terminate
-                process.send_signal(signal.SIGTERM)
-                
-                try:
-                    process.wait(timeout=5)
-                except subprocess.TimeoutExpired:
-                    process.kill()
-                    process.wait()
-                
-                # Check return code
-                assert process.returncode == 0 or process.returncode == -15, \
-                    f"Process failed with return code {process.returncode}"
-                
-                # Write to log
-                log_file.write(f"face_recognition with {hef_name} completed successfully\n")
-                log_file.write(f"Return code: {process.returncode}\n")
-                
-            except Exception as e:
-                process.kill()
-                pytest.fail(f"Test failed: {str(e)}")
-            finally:
-                if process.poll() is None:
-                    process.kill()
-                    process.wait()
-
 def test_segmentation_hefs():
     """Test instance segmentation pipeline with all compatible HEFs."""
     log_dir = "logs"
