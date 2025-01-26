@@ -23,7 +23,7 @@ def test_check_required_files():
         'basic_pipelines/detection.py',
         'basic_pipelines/pose_estimation.py',
         'basic_pipelines/instance_segmentation.py',
-        'basic_pipelines/face_recognition.py'
+        'basic_pipelines/face_recognition/face_recognition.py'
     ]
     for file in required_files:
         assert os.path.exists(file), f"Error: {file} is missing."

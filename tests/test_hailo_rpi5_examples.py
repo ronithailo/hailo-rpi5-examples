@@ -63,6 +63,10 @@ def get_pipelines_list():
     """Get a list of available pipeline scripts."""
     return ["detection.py", "pose_estimation.py", "instance_segmentation.py", "face_recognition.py"]
 
+def get_pipelines_dir():
+    """Get a list of available pipeline scripts."""
+    return ["", "", "", "face_recognition"]
+
 def get_detection_compatible_hefs(architecture):
     """Get a list of compatible HEF files based on the device architecture."""
     H8_HEFS = [
@@ -104,20 +108,20 @@ def get_pose_compatible_hefs(architecture):
 def get_face_recognition_compatible_hefs(architecture):
     """Get a list of compatible HEF files based on the device architecture."""
     H8_HEFS = [
-        "scrfd_10g.hef",
-        "arcface_mobilefacenet.hef",
+        "hailo8/scrfd_10g.hef",
+        "hailo8/arcface_mobilefacenet.hef",
     ]
 
     H8L_HEFS = [
-        "scrfd_2.5g.hef",
-        "arcface_mobilefacenet_h8l.hef",
+        "hailo8l/scrfd_2.5g.hef",
+        "hailo8l/arcface_mobilefacenet_h8l.hef",
     ]
     hef_list = H8L_HEFS
     if architecture == 'hailo8':
         # check both HAILO8 and HAILO8L
         hef_list = hef_list + H8_HEFS
 
-    return [os.path.join("resources", hef) for hef in hef_list]
+    return [os.path.join("resources/hefs/", hef) for hef in hef_list]
 
 def get_seg_compatible_hefs(architecture):
     """Get a list of compatible HEF files based on the device architecture."""
@@ -145,6 +149,7 @@ def test_all_pipelines():
     
     os.makedirs(log_dir, exist_ok=True)
     pipeline_list = get_pipelines_list()
+    pipeline_dir = get_pipelines_dir()
     arch = get_device_architecture()
     arch_parameter_list = [""] # Test with default architecture
     logging.info(f"Detected Hailo architecture: {arch}")
@@ -154,11 +159,11 @@ def test_all_pipelines():
     for arch_parameter in arch_parameter_list:
         if arch_parameter != "":
             arch_flag = f"--arch {arch_parameter}"
-        for pipeline in pipeline_list:
+        for pipe_dir, pipeline in zip(pipeline_dir, pipeline_list):
             # Test with video input
             log_file_path = os.path.join(log_dir, f"test_{pipeline}{arch_parameter}_video_test.log")
             with open(log_file_path, "w") as log_file:
-                cmd = ['python', f'basic_pipelines/{pipeline}']
+                cmd = ['python', f'basic_pipelines/{pipe_dir}/{pipeline}']
 
                 process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 logging.info(f"Running {pipeline} {arch_parameter} with video input")
@@ -308,7 +313,7 @@ def test_face_recognition_hefs():
         log_file_path = os.path.join(log_dir, f"face_recognition_{hef_name}_video_test.log")
         logging.info(f"Running face_recognition with {hef_name} (video input)")
         with open(log_file_path, "w") as log_file:
-            process = subprocess.Popen(['python', 'basic_pipelines/face_recognition.py', '--input', 'resources/example.mp4', '--hef-path', hef],
+            process = subprocess.Popen(['python', 'basic_pipelines/face_recognition/face_recognition.py', '--input', 'resources/example.mp4', '--hef-path', hef],
                                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             try:
                 time.sleep(TEST_RUN_TIME)
